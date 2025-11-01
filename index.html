@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Yedu!</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Delius&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. Global & Theme Setup --- */
+        
+        :root {
+            --silver: #E0E0E0;
+            --white: #FFFFFF;
+            --black: #000000;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'Delius', cursive;
+        }
+
+        .page {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2; /* Keep page content on top */
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* --- 2. Page 0: New Landing Page --- */
+        
+        #page-0 {
+            background-color: var(--black);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #page-0 .title {
+            font-size: clamp(2.2rem, 7vw, 5.0rem); 
+            color: var(--white);
+            text-shadow: 0 0 10px var(--white), 0 0 30px var(--silver); 
+            margin: 0;
+            z-index: 2;
+        }
+
+        #page-0 .subtitle1 {
+            font-size: clamp(1.3rem, 5vw, 2.5rem); 
+            color: var(--white); 
+            text-shadow: 0 0 8px var(--white), 0 0 15px var(--silver);
+            margin: 10px 0 0 0;
+            z-index: 2;
+        }
+        #page-0 .subtitle2 {
+            font-size: clamp(0.5rem, 2vw, 2rem); 
+            color: var(--white); 
+            text-shadow: 0 0 8px var(--white), 0 0 15px var(--silver);
+            margin: 10px 0 0 0;
+            z-index: 2;
+        }
+
+        #page-0 .prompt {
+            color: var(--silver); 
+            font-size: 1.1rem; 
+            position: absolute;
+            bottom: 30px;
+            animation: pulse 2.5s infinite;
+            z-index: 2;
+            text-shadow: 0 0 8px var(--white), 0 0 15px var(--silver);
+            transition: opacity 0.5s ease; /* Add transition */
+        }
+        
+        #page-0.started .prompt {
+            opacity: 0;
+            animation: none; /* Stop pulsing */
+        }
+
+        /* --- GLOBAL Glitter Animation --- */
+        .glitter-container { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3; /* CHANGED: On top of page content */
+        }
+
+        .sparkle, .star {
+            position: absolute;
+            background-color: var(--white);
+            box-shadow: 0 0 10px var(--silver); 
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .sparkle {
+            animation: sparkle-effect 4s linear infinite; 
+        }
+        .star {
+            animation: star-blink 6s linear infinite; 
+            background-color: var(--silver); 
+        }
+
+        @keyframes sparkle-effect {
+            0%   { transform: scale(0); opacity: 0; }
+            20%  { transform: scale(1); opacity: 1; }
+            80%  { transform: scale(0.5); opacity: 0.5; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes star-blink {
+            0%   { opacity: 0; transform: scale(0.5); }
+            50%  { opacity: 0.8; transform: scale(1.2); } 
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
+
+        /* --- GLOBAL Floating Elements --- */
+        .floating-elements-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0; /* Behind everything */
+        }
+        
+        .floating-element {
+            position: absolute;
+            bottom: -50px;
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: var(--silver); 
+            text-shadow: 0 0 5px var(--white);
+            animation: float-up 15s linear infinite;
+        }
+        
+        .floating-element:nth-child(1) { left: 15%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { left: 35%; animation-delay: 3s; }
+        .floating-element:nth-child(3) { left: 55%; animation-delay: 6s; }
+        .floating-element:nth-child(4) { left: 75%; animation-delay: 9s; }
+        .floating-element:nth-child(5) { left: 25%; animation-delay: 12s; }
+        .floating-element:nth-child(6) { left: 5%; animation-delay: 2s; }
+        .floating-element:nth-child(7) { left: 45%; animation-delay: 5s; }
+        .floating-element:nth-child(8) { left: 65%; animation-delay: 8s; }
+        .floating-element:nth-child(9) { left: 85%; animation-delay: 11s; }
+        .floating-element:nth-child(10) { left: 95%; animation-delay: 14s; }
+        .floating-element:nth-child(11) { left: 10%; animation-delay: 1s; }
+        .floating-element:nth-child(12) { left: 30%; animation-delay: 4s; }
+        .floating-element:nth-child(13) { left: 50%; animation-delay: 7s; }
+        .floating-element:nth-child(14) { left: 70%; animation-delay: 10s; }
+        .floating-element:nth-child(15) { left: 90%; animation-delay: 13s; }
+
+
+        @keyframes float-up {
+            0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- 3. Page 1: Memories Heart --- */
+        #page-1 {
+            justify-content: flex-start; /* Align to the top */
+            padding-top: 5vh; /* Add some space at the top */
+            overflow-y: auto; /* Allow scrolling on this page */
+        }
+        #page-1 h2 {
+            font-size: clamp(1.3rem, 4vw, 3rem); 
+            color: var(--white);
+            text-shadow: 0 0 8px var(--white);
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1s ease, transform 1s ease;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        
+        #page-1.show-title h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* *****************************************
+        * NEW: Wrapper for content + message
+        *****************************************
+        */
+        .content-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0; /* Keep size */
+        }
+        
+        .heart-container {
+            position: relative;
+            width: 90vmin;  /* Use vmin to be responsive */
+            height: 90vmin; /* Use vmin to be responsive */
+            max-width: 650px;  /* Set a reasonable max size */
+            max-height: 650px; /* Set a reasonable max size */
+            margin: 10px 0;
+            transition: opacity 1s ease-in-out; /* Add transition for fading */
+        }
+        
+        .heart-pic {
+            position: absolute;
+            width: 25%;
+            height: 25%;
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--white);
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--silver);
+            
+            opacity: 0;
+            transform: translateY(calc(100% + 50px)) scale(0.6); 
+            transition: all 7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .heart-pic.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        #pic1 { top: 0; left: 37.5%; }
+        #pic2 { top: 15%; left: 15%; }
+        #pic3 { top: 15%; left: 60%; }
+        #pic4 { top: 30%; left: 0; }
+        #pic5 { top: 30%; left: 37.5%; }
+        #pic6 { top: 30%; left: 75%; }
+        #pic7 { top: 50%; left: 15%; }
+        #pic8 { top: 50%; left: 60%; }
+        #pic9 { top: 65%; left: 37.5%; }
+        
+        .next-btn {
+            background-color: var(--silver);
+            color: var(--black);
+            font-family: 'Delius', cursive;
+            font-size: 1.3rem; 
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            flex-shrink: 0; 
+        }
+                
+        .next-btn:hover {
+            transform: scale(1.1);
+            background-color: var(--white);
+            box-shadow: 0 0 10px var(--white);
+        }
+
+        #start-btn {
+            position: absolute;
+            bottom: 30px;
+            padding: 15px 35px; /* Make it a bit bigger */
+            font-size: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+            transition-delay: 0.2s; /* Wait for prompt to fade */
+        }
+        
+        #start-btn.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        
+        #to-page-2 {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+        
+        #to-page-2.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 4. Page 2: Videos Page --- */
+        
+        #page-2 h2 {
+            font-size: clamp(1rem, 2vw, 2.4rem); 
+            color: var(--white);
+            text-shadow: 0 0 8px var(--white);
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+
+        .video-grid {
+            display: grid;
+            width: 90%;
+            max-width: 1400px; 
+            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            overflow-y: auto;
+            max-height: 70vh;
+            padding: 10px;
+            flex-grow: 1;
+            justify-content: center; /* Center the videos if only 2 */
+            transition: opacity 1s ease-in-out; /* Add transition for fading */
+        }
+        
+        .video-wrapper {
+            width: 100%;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            border: 3px solid var(--silver);
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(50px) scale(0.8);
+            transition: opacity 3s ease-out, transform 3s ease-out;
+        }
+        
+        .video-wrapper.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .video-wrapper iframe,
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none; /* Removed double border */
+            border-radius: 8px;
+        }
+
+        /* --- 5. Page 3: Final Page --- */
+        
+        #page-3 {
+            background-color: var(--white); /* White background as requested */
+            color: var(--black);
+        }
+
+        /* NEW: Wrapper to hold both image and text */
+        .final-animation-wrapper {
+            position: relative;
+            width: 90vmin;
+            height: 90vmin;
+            max-width: 600px; /* Large container */
+            max-height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* This container holds the image and fades back */
+        .animation-container-final {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px; /* Softer edges */
+            overflow: hidden; /* Clips the image as it scales */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+            /* This is the "fade back" animation */
+            opacity: 1;
+            transition: opacity 1.0s ease-in-out;
+            transition-delay: 2.6s; /* 1.5s for zoom + 1s pause */
+        }
+        
+        #final-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Fill the container */
+
+            /* This is the "zoom in" animation */
+            opacity: 0;
+            transform: scale(0);
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1s ease-out;
+        }
+        
+        /* This is the text that appears on top */
+        .final-message-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10; /* On top of the image */
+            width: 100%;
+
+            font-size: clamp(1.3rem, 4vw, 5.1rem); 
+            color: #333;
+            
+            /* This is the "fade in" animation for the text */
+            opacity: 0;
+            transition: opacity 1.0s ease-in-out;
+            transition-delay: 3s; /* Start fading in *as* image fades back */
+        }
+
+        /* --- These are the ".animate" states that trigger the animations --- */
+
+        /* 1. Zoom in the image */
+        #page-3.animate #final-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* 2. Fade back the image container */
+        #page-3.animate .animation-container-final {
+            opacity: 0.3; 
+        }
+
+        /* 3. Fade in the text */
+        #page-3.animate .final-message-text {
+            opacity: 1;
+        }
+
+        .cursive-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 5vw, 6rem); 
+            color: #a80303; /* Darker cursive for white background */
+            display: block;
+            margin-top: 10px;
+        }
+        
+        @keyframes pulse {
+            0%   { opacity: 0.3; }
+            50%  { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+        /* *****************************************
+        * NEW: CSS for the Overlay Message
+        *****************************************
+        */
+        .page-message {
+            font-size: clamp(0.4rem, 2vw, 1.2rem); /* Make it a bit bigger */
+            color: var(--white);
+            text-shadow: 0.5px 0.2px 10px var(--silver), 0 0 20px var(--silver); /* More glow */
+            
+            /* Position it in the center of its wrapper */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80%; /* So it wraps on small screens */
+            
+            z-index: 11; /* Higher than heart/videos */
+            opacity: 0;
+            pointer-events: none; /* Can't click it when invisible */
+            
+            /* Start state: centered, moved down, invisible */
+            transform: translate(-50%, -50%) translateY(20px); 
+            
+            transition: opacity 0.5s ease-in-out, transform 0.6s ease-in-out;
+            transition-delay: 0.5s; /* Wait half a second */
+        }
+
+        /* When .show-message is added to the PAGE: */
+        .page.show-message .page-message {
+            opacity: 1;
+            /* End state: centered and in final position */
+            transform: translate(-50%, -50%) translateY(0);
+        }
+
+        .page.show-message .heart-container,
+        .page.show-message .video-grid {
+            opacity: 0.3; /* Fade out the content */
+        }
+        /* --- 6. Page 4: Final Sleep Page --- */
+        
+        #page-4 {
+            background-color: var(--black); /* Back to black */
+        }
+
+        .sleep-message {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--silver);
+            text-shadow: 0 0 10px var(--white);
+            
+            /* Start state */
+            opacity: 0;
+            transform: translateY(20px);
+
+            /* Animation */
+            transition: opacity 2s ease-in, transform 2s ease-in;
+            transition-delay: 0.5s; /* Wait 1 second before fading in */
+        }
+
+        /* End state */
+        #page-4.animate .sleep-message {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="birthday-audio" src="Better Together.mp3" loop autoplay muted></audio>
+
+
+    <div class="glitter-container">
+        </div>
+    <div class="floating-elements-container">
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">♥</div>
+        <div class="floating-element">★</div>
+        <div class="floating-element">★</div>
+        <div class="floating-element">★</div>
+        <div class="floating-element">★</div>
+        <div class="floating-element">★</div>
+    </div>
+
+
+    <section id="page-0" class="page active">
+        <h1 class="title">Heyy Youuu.......</h1>
+        <h2 class="subtitle1">you are officially 21 now !</h2>
+        <h2 class="subtitle2">but a brain of 2 year old !!</h2>
+
+        <div class="prompt">(tap anywhere or press spacebar)</div>
+        <button id="start-btn" class="next-btn">Click Me</button>
+
+    </section>
+    
+    <section id="page-1" class="page"> 
+        <h2>Celebrating 21 years of *you*..............</h2>
+        
+        <div class="content-wrapper">
+            <div class="heart-container">
+                <div id="pic1" class="heart-pic" style="background-image: url('img13.jpg')"></div>
+                <div id="pic2" class="heart-pic" style="background-image: url('img10.jpeg')"></div>
+                <div id="pic3" class="heart-pic" style="background-image: url('img11.jpeg')"></div>
+                <div id="pic4" class="heart-pic" style="background-image: url('img2.jpeg')"></div>
+                <div id="pic5" class="heart-pic" style="background-image: url('img5.jpeg')"></div>
+                <div id="pic6" class="heart-pic" style="background-image: url('img8.jpeg')"></div>
+                <div id="pic7" class="heart-pic" style="background-image: url('img1.jpeg')"></div>
+                <div id="pic8" class="heart-pic" style="background-image: url('img4.jpeg')"></div>
+                <div id="pic9" class="heart-pic" style="background-image: url('img7.jpeg')"></div>
+            </div>
+            
+            <p class="page-message">Now that you’re 21, I really hope you start acting like one, dearest idiot! 😜
+Maybe this year you’ll finally stop mixing up Nerul and Juinagar stations? (fingers crossed 🤞)😂😂😂
+Also, thank you for always making me click pictures — even when I throw my nakhras around.
+That way we atleast have our pictures and moments with us........  love you for that 💕</p>
+        </div>
+        
+        <button id="to-page-2" class="next-btn">( click me )</button> 
+    </section>
+
+    <section id="page-2" class="page"> 
+        <h2>Just You Being You..... Mr.Rayate</h2>
+        
+        <div class="content-wrapper">
+            <div class="video-grid">
+                <div class="video-wrapper">
+                    <video src="img9.mp4" muted loop playsinline></video>
+                </div>
+                <div class="video-wrapper">
+                    <video src="img12.mp4" muted loop playsinline></video>
+                </div>
+            </div>
+
+            <p class="page-message">You look beautiful in that white flower Yeduuu jii… absolutely beautiful 🌼<br>
+No but on a serious note — may you have a flowerful and beautiful birthday!
+May all your wishes and dreams come true, and may your life bloom just like that flower 😌🌸
+Thank you for bearing with me (and all my drama) since forever😭💖......</p>
+        </div>
+        
+        <button id="to-page-3" class="next-btn" style="margin-top: 20px;"> 
+            And finally...
+        </button>
+    </section>
+
+    <section id="page-3" class="page"> 
+        <div class="final-animation-wrapper">
+            <div class="animation-container-final">
+                <img id="final-image" src="lastPic.jpeg" alt="Final Birthday Image">
+            </div>
+            
+            <h1 class="final-message-text">Happy Birthday Yedu...
+                <span class="cursive-text">Loveee youuuu 💖........</span>
+            </h1>
+        </div>
+    </section>
+
+    <section id="page-4" class="page">
+        <h2 class="sleep-message">you can sleep now ♥ <br> good night ♥ sleep tight....hhehehe♥♥</h2>
+    </section>
+
+    
+    <script>
+        // --- JavaScript for Page Navigation ---
+
+        const pages = document.querySelectorAll('.page');
+        const page0 = document.getElementById('page-0');
+        const page1 = document.getElementById('page-1');
+        const page2 = document.getElementById('page-2');
+        const page3 = document.getElementById('page-3');
+        const page4 = document.getElementById('page-4'); // NEW: Get Page 4
+        
+        const btnToPage2 = document.getElementById('to-page-2');
+        const btnToPage3 = document.getElementById('to-page-3');
+        
+        const birthdayAudio = document.getElementById('birthday-audio');
+
+        const startButton = document.getElementById('start-btn');
+        let audioStarted = false; // Flag to check if music has started
+        
+        let currentPageIndex = 0;
+
+        // Try to play the muted audio as soon as the page loads
+        birthdayAudio.play().catch(error => {
+            console.log("Muted autoplay was prevented by browser. Will play on first click.");
+        });
+
+
+        // --- Glitter Generation ---
+        const glitterContainer = document.querySelector('.glitter-container');
+        const numSparkles = 60; 
+        const numStars = 30;    
+
+        function generateGlitter() {
+            for (let i = 0; i < numSparkles; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.width = `${Math.random() * 4 + 2}px`; // 2-6px
+                sparkle.style.height = sparkle.style.width;
+                sparkle.style.animationDelay = `${Math.random() * 5}s`;
+                glitterContainer.appendChild(sparkle);
+            }
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.width = `${Math.random() * 8 + 4}px`; // 4-12px
+                star.style.height = star.style.width;
+                star.style.animationDelay = `${Math.random() * 8}s`;
+                glitterContainer.appendChild(star);
+            }
+        }
+        generateGlitter(); // Call once to create the glitter
+
+
+        function showPage(index) {
+
+            // Stop and reset videos when leaving page 2
+            if (currentPageIndex === 2) {
+                const videoWrappers = document.querySelectorAll('#page-2 .video-wrapper');
+                videoWrappers.forEach((wrapper) => {
+                    const video = wrapper.querySelector('video');
+                    if (video) {
+                        video.pause();      // Stop playing
+                        video.currentTime = 0; // Rewind to start
+                    }
+                });
+                page2.classList.remove('show-message'); // Reset message
+            }
+            
+            // Reset page 1 message
+            if (currentPageIndex === 1) {
+                page1.classList.remove('show-message');
+            }
+
+            if (pages[currentPageIndex]) {
+                pages[currentPageIndex].classList.remove('active');
+            }
+            currentPageIndex = index;
+            if (pages[currentPageIndex]) {
+                pages[currentPageIndex].classList.add('active');
+            }
+            
+            if (currentPageIndex === 1) {
+                // Reset pictures so they animate every time
+                document.querySelectorAll('#page-1 .heart-pic').forEach(pic => {
+                    pic.classList.remove('show');
+                });
+                // Reset title and button
+                page1.classList.remove('show-title');
+                document.getElementById('to-page-2').classList.remove('show');
+                
+                // Trigger animation
+                animateHeart();
+            }
+            
+            if (currentPageIndex === 2) {
+                const videoWrappers = document.querySelectorAll('#page-2 .video-wrapper');
+                videoWrappers.forEach((wrapper, i) => {
+                    // Reset animation
+                    wrapper.classList.remove('show');
+                    
+                    // Add delay for each video
+                    setTimeout(() => {
+                        wrapper.classList.add('show');
+                        
+                        // Find the video inside this wrapper and play it
+                        const video = wrapper.querySelector('video');
+                        if (video) {
+                            video.currentTime = 0; // Ensure it's at the start
+                            video.play().catch(error => {
+                                console.log("Autoplay was prevented: ", error);
+                            });
+                        }
+                    }, 500 + (i * 600)); // SLOWDOWN: 500ms delay for 1st, 1100ms for 2nd
+                });
+
+                // Show Page 2 Message
+                setTimeout(() => {
+                    page2.classList.add('show-message');
+                }, 3000); // Show message after videos have time to appear
+            }
+            
+            if (currentPageIndex === 3) {
+                 // Reset animation
+                page3.classList.remove('animate');
+                // Trigger animation
+                setTimeout(() => {
+                    page3.classList.add('animate');
+                }, 100);
+
+                // *****************************************
+                // * NEW: Automatically go to Page 4 after a delay
+                // *****************************************
+                setTimeout(() => {
+                    showPage(4); // Go to the new final page
+                }, 10000); // 10 seconds (gives time for image/text animation + reading)
+            }
+            
+            // *****************************************
+            // * NEW: Animation logic for Page 4
+            // *****************************************
+            if (currentPageIndex === 4) {
+                page4.classList.remove('animate'); // Reset animation
+                setTimeout(() => {
+                    page4.classList.add('animate'); // Trigger fade-in
+                }, 400); // Short delay
+            }
+        }
+
+        // --- Page 1: Heart Animation ---
+        function animateHeart() {
+            const pics = document.querySelectorAll('#page-1 .heart-pic');
+            const title = page1.querySelector('h2');
+            const button = document.getElementById('to-page-2');
+            
+            // Show title
+            setTimeout(() => {
+                page1.classList.add('show-title');
+            }, 200);
+
+            // SLOWDOWN: Increased image delay
+            let delay = 1200; // Start delay
+            pics.forEach((pic) => {
+                setTimeout(() => {
+                    pic.classList.add('show');
+                }, delay);
+                delay += 600; // Delay between each pic
+            });
+            
+            // Show button after pictures are done
+            // 'delay' will now be 1200 + (9 * 400) = 4800
+            setTimeout(() => {
+                button.classList.add('show');
+            }, delay + 500); // Show button at 5.3 seconds
+
+            // Show Page 1 Message
+            setTimeout(() => {
+                page1.classList.add('show-message');
+            }, delay + 1000); // Show message at 5.8 seconds
+        }
+
+        // --- Event Listeners ---
+
+        function startExperience() {
+            if (audioStarted) return; // Don't run this twice
+            audioStarted = true;
+
+            birthdayAudio.muted = false; // Unmute
+            birthdayAudio.play();        // Ensure it's playing
+
+            page0.classList.add('started');    // Hide prompt
+            startButton.classList.add('show'); // Show new button
+        }
+
+        // On first click, start the music and show the button
+        page0.addEventListener('click', startExperience);
+        
+        // On first spacebar press, do the same
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space' && currentPageIndex === 0) {
+                startExperience();
+            }
+        });
+
+        // On clicking the NEW button, go to page 1
+        startButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Stop this click from bubbling up to page0
+            showPage(1);
+        });
+
+        // These are your original page-to-page buttons
+        btnToPage2.addEventListener('click', () => {
+            showPage(2);
+        });
+
+        btnToPage3.addEventListener('click', () => {
+            showPage(3);
+        });
+            
+    </script>
+
+</body>
+</html>

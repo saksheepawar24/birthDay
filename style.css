@@ -1,0 +1,212 @@
+/* --- Global Setup & Dark Theme --- */
+:root {
+    --neon-pink: #ff00ff;
+    --neon-blue: #00ffff;
+    --neon-green: #39ff14;
+    --neon-orange: #ff9900;
+    --neon-yellow: #ffee00;
+    --neon-purple: #9d00ff;
+    --neon-red: #ff0000;
+    --dark-bg: #121212;
+    --light-text: #f0f0f0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--light-text);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+/* --- Reusable Neon Text Classes --- */
+.neon-text-pink {
+    color: #fff;
+    text-shadow:
+        0 0 7px #fff,
+        0 0 10px #fff,
+        0 0 21px #fff,
+        0 0 42px var(--neon-pink),
+        0 0 82px var(--neon-pink),
+        0 0 92px var(--neon-pink),
+        0 0 102px var(--neon-pink),
+        0 0 151px var(--neon-pink);
+}
+
+.neon-text-blue {
+    color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue);
+}
+
+.neon-text-green {
+    color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-green), 0 0 30px var(--neon-green);
+}
+
+.neon-text-orange {
+    color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-orange), 0 0 30px var(--neon-orange);
+}
+
+/* --- Hero Section --- */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+    background: radial-gradient(ellipse at center, #333 0%, var(--dark-bg) 70%);
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    /* Add the flicker animation */
+    animation: flicker 1.5s infinite alternate;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+/* --- Text Flicker Animation --- */
+@keyframes flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        /* Full brightness */
+        text-shadow:
+            0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff,
+            0 0 42px var(--neon-pink), 0 0 82px var(--neon-pink);
+    }
+    20%, 24%, 55% {       
+        /* Flicker "off" state */
+        text-shadow: none;
+    }
+}
+
+/* --- Main Content Sections --- */
+main {
+    padding: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 5rem;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+/* --- Gallery Section & Animation --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    border: 3px solid var(--neon-blue);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 15px var(--neon-blue);
+    /* Animation transition */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Gallery Hover Animation */
+.gallery-item:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 0 30px var(--neon-pink), 0 0 15px var(--neon-blue);
+}
+
+/* --- Note Section --- */
+.note {
+    text-align: center;
+    background: #1a1a1a;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    border: 2px solid var(--neon-orange);
+    box-shadow: 0 0 20px var(--neon-orange);
+}
+
+.quote {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--neon-orange);
+    margin-bottom: 1.5rem;
+}
+
+.message {
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* --- Animated Button --- */
+.cta-button {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    color: var(--light-text);
+    background-color: transparent;
+    border: 2px solid var(--neon-pink);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--neon-pink);
+    box-shadow: 0 0 10px var(--neon-pink) inset, 0 0 10px var(--neon-pink);
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--neon-pink);
+    color: var(--dark-bg);
+    text-shadow: none;
+    box-shadow: 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
+    transform: scale(1.1);
+}
+
+/* --- Floating Hearts (CSS Part) --- */
+.heart-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none; /* Lets you click "through" it */
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    bottom: -50px; /* Start off-screen */
+    font-size: 1.5rem;
+    /* Use 'forwards' to hold the end state (opacity: 0) */
+    animation: float-up 10s linear forwards;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        /* Float up 110vh (off screen) and use the JS variable for drift */
+        transform: translateY(-110vh) translateX(calc(var(--drift) * 1px)) rotate(720deg);
+        opacity: 0;
+    }
+}
