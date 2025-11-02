@@ -27,6 +27,7 @@
             background-color: var(--black);
             color: var(--white);
             font-family: 'Delius', cursive;
+            touch-action: manipulation; /* Improve touch responsiveness */
         }
 
         .page {
@@ -57,23 +58,23 @@
         }
 
         #page-0 .title {
-            font-size: clamp(2.2rem, 7vw, 5.0rem); 
-            color: var(--white);
-            text-shadow: 0 0 10px var(--white), 0 0 30px var(--silver); 
+            font-size: clamp(3.2rem, 7.8vw, 5.4rem); /* Mobile-friendly text */
+            color: var(--silver);
+            text-shadow: 0 0 12px var(--white), 0 0 30px var(--silver); 
             margin: 0;
             z-index: 2;
         }
 
         #page-0 .subtitle1 {
-            font-size: clamp(1.3rem, 5vw, 2.5rem); 
-            color: var(--white); 
+            font-size: clamp(1.5rem, 5.3vw, 2.9rem); 
+            color: var(--silver); 
             text-shadow: 0 0 8px var(--white), 0 0 15px var(--silver);
             margin: 10px 0 0 0;
             z-index: 2;
         }
         #page-0 .subtitle2 {
-            font-size: clamp(0.5rem, 2vw, 2rem); 
-            color: var(--white); 
+            font-size: clamp(1.5rem, 5.3vw, 2.9rem);  
+            color: var(--silver); 
             text-shadow: 0 0 8px var(--white), 0 0 15px var(--silver);
             margin: 10px 0 0 0;
             z-index: 2;
@@ -103,7 +104,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 3; /* CHANGED: On top of page content */
+            z-index: 3; /* On top of page content */
         }
 
         .sparkle, .star {
@@ -135,6 +136,19 @@
             100% { opacity: 0; transform: scale(0.5); }
         }
 
+        /* --- Magical Pulse Animation --- */
+        @keyframes magical-pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* --- Floating Animation for Messages --- */
+        @keyframes gentle-float {
+            0% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-10px); }
+            100% { transform: translate(-50%, -50%) translateY(0); }
+        }
 
         /* --- GLOBAL Floating Elements --- */
         .floating-elements-container {
@@ -172,7 +186,6 @@
         .floating-element:nth-child(14) { left: 70%; animation-delay: 10s; }
         .floating-element:nth-child(15) { left: 90%; animation-delay: 13s; }
 
-
         @keyframes float-up {
             0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
@@ -185,9 +198,9 @@
             overflow-y: auto; /* Allow scrolling on this page */
         }
         #page-1 h2 {
-            font-size: clamp(1.3rem, 4vw, 3rem); 
-            color: var(--white);
-            text-shadow: 0 0 8px var(--white);
+            font-size: clamp(1.8rem, 6vw, 3.5rem); 
+            color: var(--silver);
+            text-shadow: 0 0 8px var(--silver);
             z-index: 10;
             opacity: 0;
             transform: translateY(-20px);
@@ -201,10 +214,7 @@
             transform: translateY(0);
         }
 
-        /* *****************************************
-        * NEW: Wrapper for content + message
-        *****************************************
-        */
+        /* FIX 2: Added position: relative to fix text position */
         .content-wrapper {
             position: relative;
             width: 100%;
@@ -218,16 +228,16 @@
             position: relative;
             width: 90vmin;  /* Use vmin to be responsive */
             height: 90vmin; /* Use vmin to be responsive */
-            max-width: 650px;  /* Set a reasonable max size */
-            max-height: 650px; /* Set a reasonable max size */
+            max-width: 700px;  /* BIGGER: Increased max size */
+            max-height: 700px; /* BIGGER: Increased max size */
             margin: 10px 0;
             transition: opacity 1s ease-in-out; /* Add transition for fading */
         }
         
         .heart-pic {
             position: absolute;
-            width: 25%;
-            height: 25%;
+            width: 26%; 
+            height: 26%;
             background-color: #333;
             background-size: cover;
             background-position: center;
@@ -235,41 +245,51 @@
             border-radius: 10px;
             box-shadow: 0 0 15px var(--silver);
             
+            /* MAGICAL FLOAT: Start from bottom, small, and rotated */
             opacity: 0;
-            transform: translateY(calc(100% + 50px)) scale(0.6); 
-            transition: all 7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(100vh) scale(0.2) rotate(180deg); 
+            /* SLOWER & MAGICAL: New transition speed and easing */
+            transition: all 2.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
         
         .heart-pic.show {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            /* MAGICAL FLOAT: End state (in place, full size, un-rotated) */
+            transform: translateY(0) scale(1) rotate(0deg);
         }
         
-        #pic1 { top: 0; left: 37.5%; }
-        #pic2 { top: 15%; left: 15%; }
+        /* Re-calculated positions for 26% width */
+        #pic1 { top: 0; left: 37%; }
+        #pic2 { top: 15%; left: 14%; }
         #pic3 { top: 15%; left: 60%; }
         #pic4 { top: 30%; left: 0; }
-        #pic5 { top: 30%; left: 37.5%; }
-        #pic6 { top: 30%; left: 75%; }
-        #pic7 { top: 50%; left: 15%; }
+        #pic5 { top: 30%; left: 37%; }
+        #pic6 { top: 30%; left: 74%; }
+        #pic7 { top: 50%; left: 14%; }
         #pic8 { top: 50%; left: 60%; }
-        #pic9 { top: 65%; left: 37.5%; }
+        #pic9 { top: 65%; left: 37%; }
         
+        /* --- FIX 3: Restored Simple Round Button --- */
         .next-btn {
             background-color: var(--silver);
             color: var(--black);
             font-family: 'Delius', cursive;
             font-size: 1.3rem; 
             font-weight: bold;
-            padding: 10px 20px;
+            padding: 10px 20px; /* Restore padding */
             border: none;
-            border-radius: 50px;
+            border-radius: 50px; /* Restore round shape */
             cursor: pointer;
             z-index: 10;
             transition: all 0.2s;
             margin-top: 20px;
             margin-bottom: 20px;
             flex-shrink: 0; 
+            
+            /* Reset heart-specific styles */
+            width: auto; 
+            height: auto;
+            clip-path: none;
         }
                 
         .next-btn:hover {
@@ -277,11 +297,11 @@
             background-color: var(--white);
             box-shadow: 0 0 10px var(--white);
         }
-
+        
         #start-btn {
             position: absolute;
             bottom: 30px;
-            padding: 15px 35px; /* Make it a bit bigger */
+            padding: 15px 35px; 
             font-size: 1.5rem;
             opacity: 0;
             pointer-events: none;
@@ -296,23 +316,25 @@
             transform: translateY(0);
         }
         
-        #to-page-2 {
+        #to-page-2, #to-page-3 {
             opacity: 0;
             transform: translateY(20px);
             transition: all 1s ease;
+            pointer-events: none; 
         }
         
-        #to-page-2.show {
+        #to-page-2.show, #to-page-3.show {
             opacity: 1;
             transform: translateY(0);
+            pointer-events: auto; 
         }
 
         /* --- 4. Page 2: Videos Page --- */
         
         #page-2 h2 {
-            font-size: clamp(1rem, 2vw, 2.4rem); 
-            color: var(--white);
-            text-shadow: 0 0 8px var(--white);
+            font-size: clamp(1.3rem, 4vw, 2.8rem); 
+            color: var(--silver);
+            text-shadow: 0 0 8px var(--silver);
             flex-grow: 0;
             flex-shrink: 0;
         }
@@ -322,13 +344,13 @@
             width: 90%;
             max-width: 1400px; 
             gap: 25px;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             overflow-y: auto;
             max-height: 70vh;
             padding: 10px;
             flex-grow: 1;
-            justify-content: center; /* Center the videos if only 2 */
-            transition: opacity 1s ease-in-out; /* Add transition for fading */
+            justify-content: center; 
+            transition: opacity 1s ease-in-out; 
         }
         
         .video-wrapper {
@@ -338,14 +360,18 @@
             height: 0;
             border: 3px solid var(--silver);
             border-radius: 8px;
+            
+            /* MAGICAL FLOAT: Start from bottom, small, and rotated */
             opacity: 0;
-            transform: translateY(50px) scale(0.8);
-            transition: opacity 3s ease-out, transform 3s ease-out;
+            transform: translateY(100vh) scale(0.2) rotate(-180deg);
+            /* SLOWER & MAGICAL: New transition speed and easing */
+            transition: opacity 2.5s ease-out, transform 2.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
         
         .video-wrapper.show {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            /* MAGICAL FLOAT: End state */
+            transform: translateY(0) scale(1) rotate(0deg);
         }
 
         .video-wrapper iframe,
@@ -355,141 +381,87 @@
             left: 0;
             width: 100%;
             height: 100%;
-            border: none; /* Removed double border */
+            border: none; 
             border-radius: 8px;
         }
 
         /* --- 5. Page 3: Final Page --- */
         
         #page-3 {
-            background-color: var(--white); /* White background as requested */
+            background-color: var(--white); /* White background */
             color: var(--black);
         }
 
-        /* NEW: Wrapper to hold both image and text */
         .final-animation-wrapper {
             position: relative;
-            width: 90vmin;
-            height: 90vmin;
-            max-width: 600px; /* Large container */
-            max-height: 600px;
+            width: 90vw;   /* 90% of screen width */
+            height: 70vh;  /* 70% of screen height */
+            max-width: 600px; /* Still max 600px on desktop */
+            max-height: 600px;/* Still max 600px on desktop */
             display: flex;
             justify-content: center;
             align-items: center;
         }
         
-        /* This container holds the image and fades back */
         .animation-container-final {
             width: 100%;
             height: 100%;
-            border-radius: 15px; /* Softer edges */
-            overflow: hidden; /* Clips the image as it scales */
+            border-radius: 15px; 
+            overflow: hidden; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 
-            /* This is the "fade back" animation */
             opacity: 1;
             transition: opacity 1.0s ease-in-out;
-            transition-delay: 2.6s; /* 1.5s for zoom + 1s pause */
+            transition-delay: 4.5s; /* 2.5s for zoom + 2s pause */
         }
         
         #final-image {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Fill the container */
+            object-fit: cover; 
 
-            /* This is the "zoom in" animation */
             opacity: 0;
-            transform: scale(0);
-            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1s ease-out;
+            transform: scale(0) rotate(90deg); 
+            transition: transform 2.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 2.5s ease-out;
         }
         
-        /* This is the text that appears on top */
         .final-message-text {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 10; /* On top of the image */
+            z-index: 10; 
             width: 100%;
 
-            font-size: clamp(1.3rem, 4vw, 5.1rem); 
+            font-size: clamp(1.5rem, 5vw, 4rem); 
             color: #333;
             
-            /* This is the "fade in" animation for the text */
             opacity: 0;
-            transition: opacity 1.0s ease-in-out;
-            transition-delay: 3s; /* Start fading in *as* image fades back */
+            transition: opacity 3.0s ease-in-out;
+            transition-delay: 5.0s; 
         }
 
-        /* --- These are the ".animate" states that trigger the animations --- */
-
-        /* 1. Zoom in the image */
         #page-3.animate #final-image {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) rotate(0deg); 
         }
         
-        /* 2. Fade back the image container */
         #page-3.animate .animation-container-final {
             opacity: 0.3; 
         }
 
-        /* 3. Fade in the text */
         #page-3.animate .final-message-text {
             opacity: 1;
         }
 
         .cursive-text {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(2rem, 5vw, 6rem); 
-            color: #a80303; /* Darker cursive for white background */
+            font-size: clamp(2rem, 6vw, 6rem); 
+            color: #bc0303; 
             display: block;
             margin-top: 10px;
         }
-        
-        @keyframes pulse {
-            0%   { opacity: 0.3; }
-            50%  { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
 
-        /* *****************************************
-        * NEW: CSS for the Overlay Message
-        *****************************************
-        */
-        .page-message {
-            font-size: clamp(0.4rem, 2vw, 1.2rem); /* Make it a bit bigger */
-            color: var(--white);
-            text-shadow: 0.5px 0.2px 10px var(--silver), 0 0 20px var(--silver); /* More glow */
-            
-            /* Position it in the center of its wrapper */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80%; /* So it wraps on small screens */
-            
-            z-index: 11; /* Higher than heart/videos */
-            opacity: 0;
-            pointer-events: none; /* Can't click it when invisible */
-            
-            /* Start state: centered, moved down, invisible */
-            transform: translate(-50%, -50%) translateY(20px); 
-            
-            transition: opacity 0.5s ease-in-out, transform 0.6s ease-in-out;
-            transition-delay: 0.5s; /* Wait half a second */
-        }
-
-        /* When .show-message is added to the PAGE: */
-        .page.show-message .page-message {
-            opacity: 1;
-            /* End state: centered and in final position */
-            transform: translate(-50%, -50%) translateY(0);
-        }
-
-        .page.show-message .heart-container,
-        .page.show-message .video-grid {
-            opacity: 0.3; /* Fade out the content */
-        }
         /* --- 6. Page 4: Final Sleep Page --- */
         
         #page-4 {
@@ -497,24 +469,85 @@
         }
 
         .sleep-message {
-            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-size: clamp(1.2rem, 3vw, 2rem);
             color: var(--silver);
             text-shadow: 0 0 10px var(--white);
             
-            /* Start state */
             opacity: 0;
             transform: translateY(20px);
 
-            /* Animation */
-            transition: opacity 2s ease-in, transform 2s ease-in;
-            transition-delay: 0.5s; /* Wait 1 second before fading in */
+            transition: opacity 4s ease-in, transform 4s ease-in;
+            transition-delay: 1.5s; 
         }
 
-        /* End state */
         #page-4.animate .sleep-message {
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* --- Message Overlay CSS (for pages 1 & 2) --- */
+        .page-message {
+            position: absolute; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%; 
+            max-width: 600px; 
+            
+            z-index: 11; 
+            pointer-events: none; 
+            
+            text-align: center; 
+            font-size: clamp(1.3rem, 5vw, 2.2rem); 
+            color: var(--silver);
+            text-shadow: 0 0 10px var(--white), 0 0 20px var(--silver);
+
+            opacity: 0; /* Hidden by default */
+        }
+
+        .page-message .letter {
+            display: inline-block; 
+            opacity: 0;
+            /* GENTLER: Start from below, less rotation */
+            transform: translateY(80px) scale(0.5) rotate(20deg);
+            transition: opacity 1.2s ease-out, transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* State for when message is fully formed */
+        .page-message.formed {
+            opacity: 1; /* Make the container visible */
+        }
+        .page-message.formed .letter {
+            opacity: 1;
+            transform: translate(0,0) scale(1) rotate(0deg);
+        }
+
+        /* NEW: State for when message stays visible */
+        .page-message.stay-visible {
+            opacity: 1;
+            /* Add gentle floating/pulsing animation */
+            animation: gentle-float 6s ease-in-out infinite, magical-pulse 4s ease-in-out infinite;
+        }
+        .page-message.stay-visible .letter {
+            opacity: 1;
+            transform: translate(0,0) scale(1) rotate(0deg);
+        }
+
+        /* State for when message floats away (REMOVED, but kept for reference if needed) */
+        /*
+        .page-message.float-away {
+            opacity: 0;
+            transform: translate(-50%, -150%) scale(0.8); 
+            transition: opacity 2.5s ease-in, transform 2.5s ease-in;
+        }
+        */
+
+        .page.show-message .heart-container,
+        .page.show-message .video-grid {
+            opacity: 0.3; /* Fade out the content */
+            filter: blur(2px); /* Added blur effect for better contrast */
+        }
+        
     </style>
 </head>
 <body>
@@ -569,13 +602,13 @@
                 <div id="pic9" class="heart-pic" style="background-image: url('img7.jpeg')"></div>
             </div>
             
-            <p class="page-message">Now that you’re 21, I really hope you start acting like one, dearest idiot! 😜
-Maybe this year you’ll finally stop mixing up Nerul and Juinagar stations? (fingers crossed 🤞)😂😂😂
-Also, thank you for always making me click pictures — even when I throw my nakhras around.
-That way we atleast have our pictures and moments with us........  love you for that 💕</p>
+            <p id="message-page-1" class="page-message">Now that you’re 21, I really hope you start acting like one, dearest idiot! 😜<br>
+Maybe this year you’ll finally stop mixing up Nerul and Juinagar stations? (fingers crossed 🤞)😂😂😂<br>
+Also, thank you for always making me click pictures — even when I throw my nakhras around.<br>
+That way we atleast have our pictures and moments with us........  love you for that 💕</p>
         </div>
         
-        <button id="to-page-2" class="next-btn">( click me )</button> 
+        <button id="to-page-2" class="next-btn">(click me)</button> 
     </section>
 
     <section id="page-2" class="page"> 
@@ -591,9 +624,9 @@ That way we atleast have our pictures and moments with us........  love you for 
                 </div>
             </div>
 
-            <p class="page-message">You look beautiful in that white flower Yeduuu jii… absolutely beautiful 🌼<br>
-No but on a serious note — may you have a flowerful and beautiful birthday!
-May all your wishes and dreams come true, and may your life bloom just like that flower 😌🌸
+            <p id="message-page-2" class="page-message">You look beautiful in that white flower Yeduuu jii… absolutely beautiful 🌼<br>
+No but on a serious note — may you have a flowerful and beautiful birthday!<br>
+May all your wishes and dreams come true, and may your life bloom just like that flower 😌🌸<br>
 Thank you for bearing with me (and all my drama) since forever😭💖......</p>
         </div>
         
@@ -627,7 +660,7 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
         const page1 = document.getElementById('page-1');
         const page2 = document.getElementById('page-2');
         const page3 = document.getElementById('page-3');
-        const page4 = document.getElementById('page-4'); // NEW: Get Page 4
+        const page4 = document.getElementById('page-4'); 
         
         const btnToPage2 = document.getElementById('to-page-2');
         const btnToPage3 = document.getElementById('to-page-3');
@@ -674,6 +707,55 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
         }
         generateGlitter(); // Call once to create the glitter
 
+        // --- Utility to wrap text in spans for letter animation ---
+        function wrapLetters(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            // Check if it's already wrapped
+            if(element.querySelector('.letter')) {
+                // If so, just reset the classes
+                element.classList.remove('formed', 'float-away', 'stay-visible');
+                return;
+            }
+
+            // Store original text (using innerHTML to preserve <br> tags and emojis)
+            element.dataset.originalText = element.innerHTML; 
+            const textNodes = Array.from(element.childNodes);
+
+            element.innerHTML = ''; // Clear existing content
+
+            textNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    // It's text, wrap each character
+                    // FIX 1: Use Array.from() to correctly handle emojis
+                    Array.from(node.textContent).forEach(char => {
+                        const span = document.createElement('span');
+                        span.classList.add('letter');
+                        if (char === ' ') span.style.marginLeft = '0.25em'; // Handle spaces
+                        span.textContent = char;
+                        // GENTLER: Set random start positions (less x, more y)
+                        span.style.setProperty('--l-x', `${Math.random() * 100 - 50}px`);
+                        span.style.setProperty('--l-y', `${Math.random() * 50 + 50}px`);
+                        span.style.setProperty('--l-rot', `${Math.random() * 40 - 20}deg`);
+                        element.appendChild(span);
+                    });
+                } else {
+                    // It's an HTML element (like <br> or emoji span), just append it
+                    element.appendChild(node.cloneNode(true));
+                }
+            });
+        }
+        
+        // --- Utility to reset letters ---
+        function resetMessage(elementId) {
+            const element = document.getElementById(elementId);
+            if (element && element.dataset.originalText) {
+                element.classList.remove('float-away', 'formed', 'stay-visible');
+                element.innerHTML = element.dataset.originalText;
+            }
+        }
+
 
         function showPage(index) {
 
@@ -687,12 +769,16 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
                         video.currentTime = 0; // Rewind to start
                     }
                 });
-                page2.classList.remove('show-message'); // Reset message
+                page2.classList.remove('show-message'); // Reset message class
+                document.getElementById('to-page-3').classList.remove('show'); // Reset button
+                resetMessage('message-page-2'); // Reset letters
             }
             
             // Reset page 1 message
             if (currentPageIndex === 1) {
                 page1.classList.remove('show-message');
+                document.getElementById('to-page-2').classList.remove('show'); // Reset button
+                resetMessage('message-page-1'); // Reset letters
             }
 
             if (pages[currentPageIndex]) {
@@ -708,9 +794,8 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
                 document.querySelectorAll('#page-1 .heart-pic').forEach(pic => {
                     pic.classList.remove('show');
                 });
-                // Reset title and button
+                // Reset title
                 page1.classList.remove('show-title');
-                document.getElementById('to-page-2').classList.remove('show');
                 
                 // Trigger animation
                 animateHeart();
@@ -729,18 +814,32 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
                         // Find the video inside this wrapper and play it
                         const video = wrapper.querySelector('video');
                         if (video) {
-                            video.currentTime = 0; // Ensure it's at the start
+                            video.currentTime = 0; 
                             video.play().catch(error => {
                                 console.log("Autoplay was prevented: ", error);
                             });
                         }
-                    }, 500 + (i * 600)); // SLOWDOWN: 500ms delay for 1st, 1100ms for 2nd
+                    }, 800 + (i * 800)); 
                 });
 
-                // Show Page 2 Message
+                // Wrap letters for page 2 message
+                wrapLetters('message-page-2');
+
+                // Show Page 2 Message (DELAYED)
                 setTimeout(() => {
                     page2.classList.add('show-message');
-                }, 3000); // Show message after videos have time to appear
+                    animateMessage('message-page-2'); // Animate letters
+                }, 8000); // 8 seconds
+                
+                // FIXED: Keep message visible instead of floating away
+                setTimeout(() => {
+                    document.getElementById('message-page-2').classList.add('stay-visible');
+                }, 8000 + 3000); // 8s (initial delay) + 3s (letter animation time) = 11s
+                
+                // FIXED: Show Page 2 Button (DELAYED after message stays visible)
+                setTimeout(() => {
+                    document.getElementById('to-page-3').classList.add('show');
+                }, 8000 + 3000 + 12000); // 12s after message stays visible = 23s
             }
             
             if (currentPageIndex === 3) {
@@ -751,22 +850,18 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
                     page3.classList.add('animate');
                 }, 100);
 
-                // *****************************************
-                // * NEW: Automatically go to Page 4 after a delay
-                // *****************************************
+                // Automatically go to Page 4 after a delay
                 setTimeout(() => {
-                    showPage(4); // Go to the new final page
-                }, 10000); // 10 seconds (gives time for image/text animation + reading)
+                    showPage(4); 
+                }, 15000); 
             }
             
-            // *****************************************
-            // * NEW: Animation logic for Page 4
-            // *****************************************
+            // Animation logic for Page 4
             if (currentPageIndex === 4) {
-                page4.classList.remove('animate'); // Reset animation
+                page4.classList.remove('animate'); 
                 setTimeout(() => {
-                    page4.classList.add('animate'); // Trigger fade-in
-                }, 400); // Short delay
+                    page4.classList.add('animate'); 
+                }, 500); 
             }
         }
 
@@ -781,38 +876,61 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
                 page1.classList.add('show-title');
             }, 200);
 
-            // SLOWDOWN: Increased image delay
-            let delay = 1200; // Start delay
+            let delay = 1800; // Start delay
             pics.forEach((pic) => {
                 setTimeout(() => {
                     pic.classList.add('show');
                 }, delay);
-                delay += 600; // Delay between each pic
+                delay += 800; 
             });
             
-            // Show button after pictures are done
-            // 'delay' will now be 1200 + (9 * 400) = 4800
-            setTimeout(() => {
-                button.classList.add('show');
-            }, delay + 500); // Show button at 5.3 seconds
+            // 'delay' will now be 1800 + (9 * 800) = 9000
+            
+            // Wrap letters for page 1 message
+            wrapLetters('message-page-1');
 
-            // Show Page 1 Message
+            // NEW: Show Page 1 Message FIRST
             setTimeout(() => {
                 page1.classList.add('show-message');
-            }, delay + 1000); // Show message at 5.8 seconds
+                animateMessage('message-page-1'); // Animate letters
+            }, delay + 500); // Show message at 9.5s
+
+            // FIXED: Keep message visible instead of floating away
+            setTimeout(() => {
+                document.getElementById('message-page-1').classList.add('stay-visible');
+            }, delay + 500 + 3000); // 3s after message appears = 12.5s
+
+            // FIXED: Show button AFTER message stays visible
+            setTimeout(() => {
+                button.classList.add('show');
+            }, delay + 500 + 3000 + 12000); // 12s after message stays visible = 24.5s
+        }
+
+        // --- Letter Animation Function ---
+        function animateMessage(messageId) {
+            const messageElement = document.getElementById(messageId);
+            if (!messageElement) return;
+
+            messageElement.classList.add('formed'); // Set base opacity and position for container
+
+            const letters = messageElement.querySelectorAll('.letter');
+            letters.forEach((letter, i) => {
+                // Stagger animation
+                letter.style.transitionDelay = `${i * 0.05}s`; 
+            });
         }
 
         // --- Event Listeners ---
 
         function startExperience() {
-            if (audioStarted) return; // Don't run this twice
+            if (audioStarted) return; 
             audioStarted = true;
 
-            birthdayAudio.muted = false; // Unmute
-            birthdayAudio.play();        // Ensure it's playing
+            birthdayAudio.muted = false; 
+            birthdayAudio.play();        
 
-            page0.classList.add('started');    // Hide prompt
-            startButton.classList.add('show'); // Show new button
+            page0.classList.add('started');    
+            startButton.classList.add('show'); 
         }
 
         // On first click, start the music and show the button
@@ -827,7 +945,7 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
 
         // On clicking the NEW button, go to page 1
         startButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Stop this click from bubbling up to page0
+            event.stopPropagation(); 
             showPage(1);
         });
 
@@ -839,7 +957,13 @@ Thank you for bearing with me (and all my drama) since forever😭💖......</p>
         btnToPage3.addEventListener('click', () => {
             showPage(3);
         });
-            
+        
+        // Stop music on the final page click
+        page4.addEventListener('click', () => {
+            birthdayAudio.pause();
+            birthdayAudio.currentTime = 0; 
+        });
+        
     </script>
 
 </body>
